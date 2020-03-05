@@ -1,10 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Main {
+public class daily_prize {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -14,7 +13,7 @@ public class Main {
         Node root = null;
         Node node;
         StringTokenizer tokens;
-        int sum = 0;
+        long sum = 0;
         for (int i = 0; i < N; i++) {
             tokens = new StringTokenizer(reader.readLine());
             int forms = Integer.parseInt(tokens.nextToken());
@@ -27,9 +26,9 @@ public class Main {
                     Node.add(root, node);
                 }
             }
-            System.out.println();
-            Node.inorder(root, 0);
-            System.out.println();
+//            System.out.println();
+//            Node.inorder(root, 0);
+//            System.out.println();
             Node max = Node.max(root);
             if (max == null) {
                 continue;
@@ -39,8 +38,9 @@ public class Main {
                 root = root.left;
                 root.parent = null;
             } else {
-                if (max.parent != null) {
-                    max.parent.right = max.left;
+                max.parent.right = max.left;
+                if (max.left != null) {
+                    max.left.parent = max.parent;
                 }
                 max.parent = null;
             }
@@ -55,8 +55,9 @@ public class Main {
                     root.parent = null;
                 }
             } else {
-                if (min.parent != null) {
-                    min.parent.left = min.right;
+                min.parent.left = min.right;
+                if (min.right != null) {
+                    min.right.parent = min.parent;
                 }
                 min.parent = null;
             }
